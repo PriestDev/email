@@ -1,0 +1,1002 @@
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            color: white;
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            font-size: 2.8em;
+            margin-bottom: 10px;
+            background: linear-gradient(135deg, #00d4ff 0%, #0099ff 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .template-selector {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 12px 28px;
+            border: 2px solid rgba(0, 212, 255, 0.3);
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            background: rgba(255, 255, 255, 0.05);
+            color: #00d4ff;
+        }
+
+        .btn.active {
+            background: linear-gradient(135deg, #00d4ff 0%, #0099ff 100%);
+            color: #1a1a2e;
+            border-color: #00d4ff;
+            box-shadow: 0 0 20px rgba(0, 212, 255, 0.5);
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            border-color: #00d4ff;
+            box-shadow: 0 0 15px rgba(0, 212, 255, 0.3);
+        }
+
+        .email-preview {
+            display: none;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+            overflow: hidden;
+            animation: slideIn 0.4s ease;
+        }
+
+        .email-preview.active {
+            display: block;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideInRight {
+            from {
+                opacity: 0;
+                transform: translateX(100%);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes slideOutRight {
+            from {
+                opacity: 1;
+                transform: translateX(0);
+            }
+
+            to {
+                opacity: 0;
+                transform: translateX(100%);
+            }
+        }
+
+        /* ===== DESIGN 1: Binance Style ===== */
+        .binance-email {
+            border: 2px solid #f3ba2f;
+        }
+
+        .binance-header {
+            background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+            padding: 35px 15px;
+            border-bottom: 3px solid #f3ba2f;
+        }
+
+        .binance-logo {
+            color: #f3ba2f;
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        .binance-header h2 {
+            color: #f3ba2f;
+            font-size: 26px;
+            margin-bottom: 8px;
+        }
+
+        .binance-content {
+            padding: 35px 15px;
+            background: white;
+        }
+
+        .binance-footer {
+            background: #1a1a1a;
+            color: #f3ba2f;
+            padding: 25px 15px;
+            text-align: center;
+            font-size: 12px;
+            border-top: 2px solid #f3ba2f;
+            position: relative;
+        }
+
+        .binance-footer:hover .delete-section {
+            opacity: 1;
+        }
+
+        /* ===== DESIGN 2: Coinbase Style ===== */
+        .coinbase-email {
+            border: 1px solid #0052ff;
+        }
+
+        .coinbase-header {
+            background: linear-gradient(135deg, #0052ff 0%, #0066ff 100%);
+            color: white;
+            padding: 40px 15px;
+        }
+
+        .coinbase-logo {
+            font-size: 22px;
+            font-weight: 900;
+            letter-spacing: 2px;
+            margin-bottom: 20px;
+        }
+
+        .coinbase-header h2 {
+            font-size: 28px;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+
+        .coinbase-content {
+            padding: 35px 15px;
+            background: white;
+        }
+
+        .coinbase-footer {
+            background: #f7f8f9;
+            padding: 25px 15px;
+            text-align: center;
+            font-size: 12px;
+            color: #666;
+            border-top: 1px solid #ddd;
+            position: relative;
+        }
+
+        .coinbase-footer:hover .delete-section {
+            opacity: 1;
+        }
+
+        /* ===== DESIGN 3: Trust Wallet Style ===== */
+        .trust-email {
+            border: 2px solid #3375bb;
+        }
+
+        .trust-header {
+            background: linear-gradient(135deg, #3375bb 0%, #2563a8 100%);
+            color: white;
+            padding: 35px 15px;
+        }
+
+        .trust-logo {
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 15px;
+            letter-spacing: 1px;
+        }
+
+        .trust-header h2 {
+            font-size: 26px;
+            margin-bottom: 5px;
+            font-weight: 600;
+        }
+
+        .trust-content {
+            padding: 35px 15px;
+            background: white;
+        }
+
+        .trust-footer {
+            background: #f0f2f5;
+            color: #3375bb;
+            padding: 25px 15px;
+            text-align: center;
+            font-size: 12px;
+            border-top: 2px solid #3375bb;
+            position: relative;
+        }
+
+        .trust-footer:hover .delete-section {
+            opacity: 1;
+        }
+
+        /* ===== DESIGN 4: Blockchain Tech Style ===== */
+        .blockchain-email {
+            border: 2px solid #00ff88;
+            background: linear-gradient(135deg, rgba(0, 255, 136, 0.05), transparent);
+        }
+
+        .blockchain-header {
+            background: linear-gradient(135deg, #0a0e27 0%, #1a1f3a 100%);
+            color: #00ff88;
+            padding: 40px 15px;
+            border-bottom: 3px solid #00ff88;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .blockchain-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, rgba(0, 255, 136, 0.1) 0%, transparent 70%);
+            border-radius: 50%;
+        }
+
+        .blockchain-logo {
+            font-size: 22px;
+            font-weight: bold;
+            margin-bottom: 15px;
+            position: relative;
+            z-index: 1;
+            letter-spacing: 3px;
+        }
+
+        .blockchain-header h2 {
+            font-size: 26px;
+            margin-bottom: 5px;
+            position: relative;
+            z-index: 1;
+            text-shadow: 0 0 10px rgba(0, 255, 136, 0.5);
+        }
+
+        .blockchain-content {
+            padding: 35px 15px;
+            background: white;
+        }
+
+        .blockchain-footer {
+            background: linear-gradient(135deg, #0a0e27 0%, #1a1f3a 100%);
+            color: #00ff88;
+            padding: 25px 15px;
+            text-align: center;
+            font-size: 12px;
+            border-top: 2px solid #00ff88;
+            position: relative;
+        }
+
+        .blockchain-footer:hover .delete-section {
+            opacity: 1;
+        }
+
+        /* Common Styles */
+        .subject-line {
+            background: #f5f5f5;
+            padding: 15px 20px;
+            font-size: 13px;
+            font-weight: 600;
+            border-bottom: 1px solid #ddd;
+            color: #333;
+            position: relative;
+        }
+
+        .subject-line:hover .delete-section {
+            opacity: 1;
+        }
+
+        .delete-section {
+            position: absolute;
+            width: 26px;
+            height: 26px;
+            background: transparent;
+            color: transparent;
+            border: none;
+            cursor: pointer;
+            opacity: 0;
+            transition: transform 0.2s ease, opacity 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 10;
+            transform: scale(0.95);
+            overflow: visible;
+        }
+
+        .delete-section:hover {
+            transform: scale(1.05);
+        }
+
+        .delete-section:active {
+            transform: scale(0.95);
+        }
+
+        .delete-section::before {
+            content: '🗑️';
+            font-size: 14px;
+            color: #333;
+        }
+
+        .subject-line .delete-section {
+            top: 8px;
+            right: 8px;
+        }
+
+        .content-section .delete-section,
+        .signature .delete-section,
+        .trust-footer .delete-section {
+            top: -8px;
+            right: -8px;
+        }
+
+        .content-section {
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        .alert-section {
+            position: relative;
+            display: flex;
+            align-items: flex-start;
+            gap: 14px;
+            background: #fff;
+            border: 1px solid rgba(255, 193, 7, 0.22);
+            border-left: 5px solid #ffc107;
+            border-radius: 16px;
+            padding: 18px 20px;
+            margin-bottom: 20px;
+            color: #1f2a3d;
+            box-shadow: 0 18px 40px rgba(18, 54, 105, 0.08);
+        }
+
+        .alert-section::before {
+            content: '⚠️';
+            font-size: 18px;
+            margin-top: 2px;
+        }
+
+        .alert-section p {
+            margin: 0;
+            color: #1f2a3d;
+        }
+
+        .content-section:hover .delete-section {
+            opacity: 1;
+        }
+
+        .cta-wrapper {
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+        }
+
+        .cta-wrapper .delete-section,
+        .cta-wrapper .link-edit {
+            position: absolute;
+            top: -10px;
+            opacity: 0;
+            transition: opacity 0.2s ease, transform 0.2s ease;
+        }
+
+        .cta-wrapper .link-edit {
+            right: 35px;
+            background: transparent;
+            border: none;
+            padding: 0;
+            font-size: 14px;
+            color: #333;
+            transform: scale(0.95);
+            cursor: pointer;
+        }
+
+        .cta-wrapper:hover .delete-section,
+        .cta-wrapper:hover .link-edit {
+            opacity: 1;
+            transform: scale(1.05);
+        }
+
+        .cta-wrapper .delete-section {
+            right: -10px;
+        }
+
+        .cta-button[contenteditable="true"] {
+            cursor: text;
+        }
+
+        .content-section p,
+        .content-section h3,
+        .editable-text {
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .content-section h3 {
+            font-size: 16px;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        .content-section p {
+            margin-bottom: 15px;
+        }
+
+        .editable-text {
+            padding: 4px 8px;
+            border-radius: 3px;
+            cursor: text;
+            transition: background 0.2s;
+        }
+
+        .editable-text:hover {
+            background: rgba(0, 212, 255, 0.1);
+        }
+
+        .editable-text:focus {
+            outline: 2px solid #00d4ff;
+            outline-offset: 2px;
+            background: rgba(0, 212, 255, 0.2);
+        }
+
+        .signature {
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #ddd;
+            font-size: 14px;
+            position: relative;
+        }
+
+        .signature:hover .delete-section {
+            opacity: 1;
+        }
+
+        .toolbar {
+            padding: 20px 30px;
+            background: #f9f9f9;
+            border-top: 1px solid #ddd;
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            justify-content: flex-start;
+        }
+
+        .toolbar button {
+            padding: 8px 16px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: 600;
+            transition: all 0.2s;
+            background: white;
+            color: #333;
+        }
+
+        .toolbar button:hover {
+            background: #00d4ff;
+            color: white;
+            border-color: #00d4ff;
+        }
+
+        .toolbar button.danger {
+            color: #ff4444;
+            border-color: #ff4444;
+        }
+
+        .toolbar button.danger:hover {
+            background: #ff4444;
+            color: white;
+        }
+
+        .customizer {
+            background: rgba(11, 18, 33, 0.95);
+            border: 1px solid rgba(0, 212, 255, 0.18);
+            border-radius: 16px;
+            padding: 28px;
+            margin: 30px 0 40px;
+            color: #ecf5ff;
+            box-shadow: 0 18px 45px rgba(0, 0, 0, 0.18);
+        }
+
+        .customizer h3 {
+            color: #7ae8ff;
+            margin-bottom: 22px;
+            font-size: 20px;
+            letter-spacing: 0.4px;
+            text-transform: uppercase;
+        }
+
+        .customizer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 18px;
+            align-items: end;
+        }
+
+        .field-group,
+        .color-input-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .field-group label,
+        .color-input-group label {
+            font-size: 12px;
+            margin-bottom: 10px;
+            color: #7ae8ff;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+        }
+
+        .field-group input[type="text"],
+        .field-group select,
+        .color-input-group input[type="text"] {
+            padding: 12px 14px;
+            border: 1px solid rgba(122, 232, 255, 0.22);
+            border-radius: 9px;
+            background: rgba(16, 24, 40, 0.9);
+            color: #f5faff;
+            font-size: 14px;
+            outline: none;
+            transition: border-color 0.2s ease, box-shadow 0.2s ease;
+            margin-top: 5px;
+        }
+
+        .field-group input[type="text"]:focus,
+        .field-group select:focus,
+        .color-input-group input[type="text"]:focus {
+            border-color: rgba(0, 212, 255, 0.7);
+            box-shadow: 0 0 0 4px rgba(0, 212, 255, 0.12);
+        }
+
+        .color-input-group input[type="color"] {
+            width: 100%;
+            height: 44px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            padding: 0;
+        }
+
+        .field-group select {
+            appearance: none;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            background-image: linear-gradient(45deg, transparent 50%, #7ae8ff 50%),
+                linear-gradient(135deg, #7ae8ff 50%, transparent 50%);
+            background-position: calc(100% - 20px) calc(1em + 2px), calc(100% - 15px) calc(1em + 2px);
+            background-size: 6px 6px, 6px 6px;
+            background-repeat: no-repeat;
+            padding-right: 36px;
+            cursor: pointer;
+        }
+
+        .intro-text {
+            margin-top: 5px;
+        }
+
+        .template-meta-card {
+            background: #f6fbff;
+            border: 1px solid #d7e5ff;
+            border-radius: 18px;
+            padding: 18px 22px;
+            margin: 20px;
+            box-shadow: 0 10px 30px rgba(0, 65, 145, 0.08);
+        }
+
+        .message-card {
+            background: white;
+            border: 1px solid #e4ebf8;
+            border-radius: 18px;
+            margin: 0 20px 20px;
+            box-shadow: 0 12px 36px rgba(12, 44, 88, 0.08);
+            overflow: hidden;
+        }
+
+        .message-card .binance-header,
+        .message-card .coinbase-header,
+        .message-card .trust-header,
+        .message-card .blockchain-header {
+            margin-bottom: 0;
+        }
+
+        .message-card .binance-content,
+        .message-card .coinbase-content,
+        .message-card .trust-content,
+        .message-card .blockchain-content {
+            padding: 35px 30px;
+            background: white;
+        }
+
+        .message-card .toolbar {
+            margin-top: 0;
+        }
+
+        .template-meta-card .subject-line {
+            background: transparent;
+            padding: 0;
+            border: none;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            margin-bottom: 14px;
+            font-size: 15px;
+            font-weight: 700;
+            color: #1c2b4a;
+        }
+
+        .template-meta-card .subject-line .editable-text {
+            background: rgba(0, 212, 255, 0.12);
+            padding: 6px 10px;
+            border-radius: 12px;
+            min-width: 250px;
+            display: inline-block;
+        }
+
+        .template-meta-card .recipient-line {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 12px;
+            padding: 14px 16px;
+            background: white;
+            border: 1px solid #c8d4f1;
+            border-radius: 14px;
+        }
+
+        .template-meta-card .recipient-line label {
+            font-weight: 700;
+            color: #334e8f;
+            min-width: 80px;
+        }
+
+        .recipient-input {
+            flex: 1;
+            padding: 12px 14px;
+            border: 1px solid #c8d4f1;
+            border-radius: 10px;
+            background: #f8fbff;
+            color: #1f3e6f;
+            font-size: 14px;
+            min-width: 220px;
+        }
+
+        .recipient-input:focus,
+        .template-meta-card .subject-line .editable-text:focus {
+            outline: 2px solid #00d4ff;
+            outline-offset: 2px;
+            border-color: #00a0ff;
+            background: #e8f6ff;
+        }
+
+        .binance-header .intro-text {
+            color: #f3ba2f;
+        }
+
+        .coinbase-header .intro-text {
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .blockchain-header .intro-text {
+            color: #00ff88;
+        }
+
+        .trust-header .intro-text {
+            color: rgba(255, 255, 255, 0.9);
+            max-width: 620px;
+        }
+
+        .brand-logo {
+            height: 40px;
+            width: auto;
+            margin-bottom: 15px;
+            background-color: transparent;
+            mix-blend-mode: screen;
+            filter: brightness(1.1);
+        }
+
+        .cta-button,
+        .cta-link {
+            display: inline-block;
+            padding: 14px 35px;
+            border-radius: 8px;
+            margin: 20px 0;
+            font-weight: 700;
+            font-size: 16px;
+            text-decoration: none;
+            border: none;
+            cursor: pointer;
+        }
+
+        .cta-button {
+            color: white;
+        }
+
+        .btn-binance {
+            background: #f3ba2f;
+            color: #1a1a1a;
+        }
+
+        .btn-coinbase {
+            background: #0052ff;
+            color: white;
+        }
+
+        .btn-blockchain {
+            background: #00ff88;
+            color: #0a0e27;
+        }
+
+        .btn-trust {
+            background: #3375bb;
+            color: white;
+        }
+
+        .cta-link {
+            background: #3375bb;
+            color: white;
+        }
+
+        .inline-link {
+            color: #3375bb;
+            text-decoration: none;
+        }
+
+        .detail-card {
+            background: #f7fbff;
+            border: 1px solid #dbe9ff;
+            border-radius: 12px;
+            padding: 20px;
+        }
+
+        .detail-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+
+        .detail-table td {
+            padding: 8px 0;
+            border-bottom: 1px solid #e0e6ff;
+        }
+
+        .detail-label {
+            font-weight: 600;
+            color: #1f3e6f;
+        }
+
+        .detail-value {
+            text-align: right;
+        }
+
+        .detail-value.mono {
+            font-family: monospace;
+            font-size: 12px;
+        }
+
+        .notice-card {
+            position: relative;
+            display: flex;
+            align-items: flex-start;
+            gap: 14px;
+            background: #fff8e2;
+            border: 1px solid rgba(255, 202, 23, 0.24);
+            border-left: 5px solid #f1c40f;
+            border-radius: 16px;
+            padding: 18px 20px;
+            margin-bottom: 20px;
+            color: #5f4b0b;
+            box-shadow: 0 16px 36px rgba(80, 70, 0, 0.08);
+        }
+
+        .notice-card::before {
+            content: 'ℹ️';
+            font-size: 18px;
+            margin-top: 2px;
+        }
+
+        .notice-card p {
+            margin: 0;
+            color: #5f4b0b;
+        }
+
+        .notification-toast {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #4caf50;
+            color: white;
+            padding: 12px 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            z-index: 1000;
+            font-size: 14px;
+            animation: slideInRight 0.3s ease;
+        }
+
+        .status-toast {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            min-width: 240px;
+            padding: 14px 18px;
+            border-radius: 10px;
+            box-shadow: 0 6px 22px rgba(0, 0, 0, 0.18);
+            z-index: 1000;
+            font-size: 14px;
+            color: white;
+            animation: slideInRight 0.25s ease;
+        }
+
+        .status-toast.success {
+            background: #28a745;
+        }
+
+        .status-toast.error {
+            background: #d32f2f;
+        }
+
+        .status-toast.loading {
+            background: #1976d2;
+        }
+
+        .status-toast .status-spinner {
+            width: 14px;
+            height: 14px;
+            border: 2px solid rgba(255, 255, 255, 0.4);
+            border-top-color: #fff;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .send-button {
+            position: fixed;
+            right: 24px;
+            bottom: 24px;
+            z-index: 1000;
+            padding: 16px 22px;
+            border-radius: 50px;
+            background: linear-gradient(135deg, #00d4ff 0%, #0052ff 100%);
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 700;
+            box-shadow: 0 12px 30px rgba(0, 212, 255, 0.3);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .send-button:disabled {
+            opacity: 0.65;
+            cursor: not-allowed;
+            box-shadow: 0 8px 18px rgba(0, 0, 0, 0.15);
+        }
+
+        .send-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 16px 36px rgba(0, 212, 255, 0.45);
+        }
+
+        .send-button:active {
+            transform: translateY(0);
+        }
+
+        .view-sent-button {
+            position: fixed;
+            right: 24px;
+            bottom: 80px;
+            z-index: 1000;
+            padding: 12px 18px;
+            border-radius: 25px;
+            background: linear-gradient(135deg, #ff6b6b 0%, #ee5a24 100%);
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            box-shadow: 0 8px 20px rgba(255, 107, 107, 0.3);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .view-sent-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 28px rgba(255, 107, 107, 0.4);
+        }
+
+        .view-sent-button:active {
+            transform: translateY(0);
+        }
+
+        @media (max-width: 768px) {
+            .send-button {
+                right: 16px;
+                bottom: 16px;
+                padding: 12px 18px;
+                font-size: 14px;
+            }
+
+            .view-sent-button {
+                right: 16px;
+                bottom: 60px;
+                padding: 10px 14px;
+                font-size: 12px;
+            }
+
+            .binance-header,
+            .coinbase-header,
+            .trust-header,
+            .blockchain-header {
+                padding: 25px 10px;
+            }
+
+            .binance-content,
+            .coinbase-content,
+            .trust-content,
+            .blockchain-content {
+                padding: 25px 10px;
+            }
+
+            .binance-footer,
+            .coinbase-footer,
+            .trust-footer,
+            .blockchain-footer {
+                padding: 20px 10px;
+            }
+
+            .toolbar {
+                padding: 15px 10px;
+            }
+
+            .template-meta-card .recipient-line {
+                padding: 10px 12px;
+            }
+
+            .recipient-input {
+                min-width: 150px;
+            }
+        }
