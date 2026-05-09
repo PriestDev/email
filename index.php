@@ -1,3 +1,17 @@
+<?php
+session_start();
+$error = '';
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $password = trim($_POST['password'] ?? '');
+    if ($password === 'secure123') { // Change this password
+        $_SESSION['authenticated'] = true;
+        header('Location: mailer/');
+        exit;
+    } else {
+        $error = 'Incorrect password.';
+    }
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -59,19 +73,9 @@
             <input type="password" name="password" placeholder="Password" required>
             <button type="submit">Access</button>
         </form>
-        <?php
-        session_start();
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $password = trim($_POST['password'] ?? '');
-            if ($password === 'secure123') { // Change this password
-                $_SESSION['authenticated'] = true;
-                header('Location: mailer/');
-                exit;
-            } else {
-                echo '<div class="error">Incorrect password.</div>';
-            }
-        }
-        ?>
+        <?php if (!empty($error)): ?>
+            <div class="error"><?php echo htmlspecialchars($error); ?></div>
+        <?php endif; ?>
     </div>
 </body>
 </html>

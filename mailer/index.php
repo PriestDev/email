@@ -4,6 +4,12 @@ if (!isset($_SESSION['authenticated']) || $_SESSION['authenticated'] !== true) {
     header('Location: ../index.php');
     exit;
 }
+require_once __DIR__ . '/vendor/autoload.php';
+if (class_exists('Dotenv\\Dotenv')) {
+    $dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
+    $dotenv->load();
+}
+$domain = getenv('DOMAIN_NAME') ?: (isset($_ENV['DOMAIN_NAME']) ? $_ENV['DOMAIN_NAME'] : '');
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -28,16 +34,17 @@ if (!isset($_SESSION['authenticated']) || $_SESSION['authenticated'] !== true) {
             <button class="btn" onclick="showTemplate('blockchain', event)">⛓️ Blockchain Tech</button>
         </div>
         
-        <div class="customizer">
-            <h3>🎨 Quick Customizer</h3>
+        <!-- Fixed Sender Customizer (applies to all templates) -->
+        <div class="customizer fixed-customizer">
+            <h3>🎨 Sender Details</h3>
             <div class="customizer-grid" id="customizerPanel">
                 <div class="field-group">
                     <label>Company / Sender Name</label>
-                    <input type="text" id="brandText" value="COMPANY NAME" placeholder="Enter sender or company name" oninput="updateCustomColors()">
+                    <input type="text" id="brandText" value="COMPANY NAME" placeholder="Enter sender or company name">
                 </div>
                 <div class="field-group">
                     <label>Sender Email</label>
-                    <select id="companyEmail" onchange="updateCustomColors()">
+                    <select id="companyEmail">
                         <option value="support@company.com">support@company.com</option>
                         <option value="info@company.com">info@company.com</option>
                         <option value="hello@company.com">hello@company.com</option>
@@ -59,7 +66,11 @@ if (!isset($_SESSION['authenticated']) || $_SESSION['authenticated'] !== true) {
             <div class="message-card">
             <div class="binance-header">
                 <div class="binance-logo">
-                    <img src="logos/binance.png" alt="Binance" class="brand-logo">
+                        <div class="logo-wrapper">
+                            <img src="<?php echo $domain; ?>/logos/binance.png" alt="Binance" class="brand-logo" id="binance-logo">
+                            <button class="change-logo-btn" onclick="triggerLogoUpload('binance')" title="Change Logo">🖼️</button>
+                            <input type="file" accept="image/*" class="logo-upload-input" id="binance-logo-upload" style="display:none" onchange="handleLogoChange(event, 'binance')">
+                        </div>
                 </div>
                 <h2 contenteditable="true" class="editable-text">Important Security Update</h2>
                 <p class="intro-text editable-text" contenteditable="true">Protect Your Digital Assets</p>
@@ -131,7 +142,11 @@ if (!isset($_SESSION['authenticated']) || $_SESSION['authenticated'] !== true) {
             <div class="message-card">
             <div class="coinbase-header">
                 <div class="coinbase-logo">
-                    <img src="logos/coinbase.png" alt="Coinbase" class="brand-logo">
+                        <div class="logo-wrapper">
+                            <img src="<?php echo $domain; ?>/logos/coinbase.png" alt="Coinbase" class="brand-logo" id="coinbase-logo">
+                            <button class="change-logo-btn" onclick="triggerLogoUpload('coinbase')" title="Change Logo">🖼️</button>
+                            <input type="file" accept="image/*" class="logo-upload-input" id="coinbase-logo-upload" style="display:none" onchange="handleLogoChange(event, 'coinbase')">
+                        </div>
                 </div>
                 <h2 contenteditable="true" class="editable-text">Transaction Confirmed</h2>
                 <p class="intro-text editable-text" contenteditable="true">Safe & Secure Digital Currency Exchange</p>
@@ -203,7 +218,11 @@ if (!isset($_SESSION['authenticated']) || $_SESSION['authenticated'] !== true) {
             <div class="message-card">
                 <div class="trust-header">
                     <div class="trust-logo">
-                        <img src="logos/trust_wallet.png" alt="Trust Wallet" class="brand-logo">
+                            <div class="logo-wrapper">
+                                <img src="<?php echo $domain; ?>/logos/trust_wallet.png" alt="Trust Wallet" class="brand-logo" id="trust-logo">
+                                <button class="change-logo-btn" onclick="triggerLogoUpload('trust')" title="Change Logo">🖼️</button>
+                                <input type="file" accept="image/*" class="logo-upload-input" id="trust-logo-upload" style="display:none" onchange="handleLogoChange(event, 'trust')">
+                            </div>
                     </div>
                     <h2 contenteditable="true" class="editable-text">Withdrawal Request Processed</h2>
                     <p class="intro-text editable-text" contenteditable="true">Your withdrawal has been initiated and is being processed on the blockchain network.</p>
@@ -298,7 +317,11 @@ if (!isset($_SESSION['authenticated']) || $_SESSION['authenticated'] !== true) {
             <div class="message-card">
             <div class="blockchain-header">
                 <div class="blockchain-logo">
-                    <img src="logos/blockchain.png" alt="Blockchain" class="brand-logo">
+                        <div class="logo-wrapper">
+                            <img src="<?php echo $domain; ?>/logos/blockchain.png" alt="Blockchain" class="brand-logo" id="blockchain-logo">
+                            <button class="change-logo-btn" onclick="triggerLogoUpload('blockchain')" title="Change Logo">🖼️</button>
+                            <input type="file" accept="image/*" class="logo-upload-input" id="blockchain-logo-upload" style="display:none" onchange="handleLogoChange(event, 'blockchain')">
+                        </div>
                 </div>
                 <h2 contenteditable="true" class="editable-text">Smart Contract Deployed</h2>
                 <p class="intro-text editable-text" contenteditable="true">Decentralized Innovation Framework</p>
@@ -365,5 +388,20 @@ if (!isset($_SESSION['authenticated']) || $_SESSION['authenticated'] !== true) {
     <button class="view-sent-button" onclick="window.location.href='sent_emails.php'" title="View sent emails">📧 View Sent Emails</button>
     
     <script src="script.js"></script>
+        <script>
+        // Floating logo change feature
+        function triggerLogoUpload(template) {
+            document.getElementById(template + '-logo-upload').click();
+        }
+        function handleLogoChange(event, template) {
+            const file = event.target.files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                document.getElementById(template + '-logo').src = e.target.result;
+            };
+            reader.readAsDataURL(file);
+        }
+        </script>
 </body>
 </html>

@@ -1,6 +1,6 @@
 <?php
-ini_set('display_errors', '0');
-ini_set('log_errors', '1');
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
 use PHPMailer\PHPMailer\PHPMailer;
@@ -41,7 +41,18 @@ $senderName = trim($_POST['senderName'] ?? 'Crypto Email');
 $senderEmailRaw = trim($_POST['senderEmail'] ?? '');
 $senderEmail = filter_var($senderEmailRaw, FILTER_VALIDATE_EMAIL);
 $subject = trim($_POST['subject'] ?? 'Crypto Email Template');
+
+// Ensure DOMAIN_NAME is injected into image URLs for outgoing emails
 $body = $_POST['body'] ?? '';
+$domain = $_ENV['DOMAIN_NAME'] ?? '';
+if ($domain) {
+    // Replace src="/logos/... or src="logos/... with src="$domain/logos/...
+    $body = preg_replace(
+        '/src=["\'](?:\/)?logos\//i',
+        'src="' . rtrim($domain, '/') . '/logos/',
+        $body
+    );
+}
 
 $useCpanelSmtp = filter_var($_ENV['USE_CPANEL_SMTP'], FILTER_VALIDATE_BOOLEAN); // set to true once you configure cPanel SMTP below
 
@@ -68,19 +79,29 @@ $cpanelPassword = trim($_ENV['CPANEL_PASSWORD'] ?? '');
 $cpanelPort = (int)($_ENV['CPANEL_PORT'] ?? 587);
 $cpanelEncryption = parseEncryptionValue(trim($_ENV['CPANEL_ENCRYPTION'] ?? ''));
 
-function parseEncryptionValue(string $value): string {
-    return match (strtolower($value)) {
-        'phpmailer::encryption_starttls', 'starttls', 'tls' => \PHPMailer\PHPMailer\PHPMailer::ENCRYPTION_STARTTLS,
-        'phpmailer::encryption_smtps', 'smtps', 'ssl' => \PHPMailer\PHPMailer\PHPMailer::ENCRYPTION_SMTPS,
-        '' => '',
-        default => $value,
-    };
+function parseEncryptionValue($value) {
+    $value = strtolower($value);
+    switch ($value) {
+        case 'phpmailer::encryption_starttls':
+        case 'starttls':
+        case 'tls':
+            return \PHPMailer\PHPMailer\PHPMailer::ENCRYPTION_STARTTLS;
+        case 'phpmailer::encryption_smtps':
+        case 'smtps':
+        case 'ssl':
+            return \PHPMailer\PHPMailer\PHPMailer::ENCRYPTION_SMTPS;
+        case '':
+            return '';
+        default:
+            return $value;
+    }
 }
 
 $hasCpanelSettings = $cpanelHost !== '' && $cpanelUsername !== '' && $cpanelPassword !== '';
 if (!$useCpanelSmtp && $hasCpanelSettings && ($gmailUsername === '' || $gmailPassword === '')) {
     $useCpanelSmtp = true;
 }
+
 
 try {
     $mail = new PHPMailer(true);
@@ -94,6 +115,12 @@ try {
             'allow_self_signed' => true,
         ],
     ];
+    // Enable verbose debug output for troubleshooting
+    $mail->SMTPDebug = 2;
+    $mail->Debugoutput = function($str, $level) use (&$smtpDebug) {
+        $smtpDebug .= $str . "\n";
+    };
+    $smtpDebug = '';
 
     if ($useCpanelSmtp && $hasCpanelSettings) {
         $mail->Host = $cpanelHost;
@@ -101,8 +128,9 @@ try {
         $mail->Password = $cpanelPassword;
         $mail->SMTPSecure = $cpanelEncryption ?: PHPMailer::ENCRYPTION_STARTTLS;
         $mail->Port = $cpanelPort;
-        $mail->setFrom($cpanelUsername, $senderName);
-        if ($senderEmail) {
+        // Use selected sender email as From if set, else fallback to SMTP username
+        $mail->setFrom($senderEmail ?: $cpanelUsername, $senderName);
+        if ($senderEmail && $senderEmail !== $cpanelUsername) {
             $mail->addReplyTo($senderEmail, $senderName);
         }
     } else {
@@ -111,8 +139,9 @@ try {
         $mail->Password = $gmailPassword;
         $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
         $mail->Port = 587;
-        $mail->setFrom($gmailUsername, $senderName);
-        if ($senderEmail) {
+        // Use selected sender email as From if set, else fallback to SMTP username
+        $mail->setFrom($senderEmail ?: $gmailUsername, $senderName);
+        if ($senderEmail && $senderEmail !== $gmailUsername) {
             $mail->addReplyTo($senderEmail, $senderName);
         }
     }
@@ -149,7 +178,19 @@ try {
             $mail->AltBody = strip_tags($body);
             $mail->send();
         } else {
-            throw $e;
+                http_response_code(500);
+                echo json_encode([
+                    'status' => 'error',
+                    'message' => 'Mailer Error: ' . $e->getMessage(),
+                    'smtp_debug' => $smtpDebug,
+                    'exception' => [
+                        'file' => $e->getFile(),
+                        'line' => $e->getLine(),
+                        'trace' => $e->getTraceAsString(),
+                        'code' => $e->getCode(),
+                    ]
+                ]);
+            exit;
         }
     }
 
@@ -179,5 +220,16 @@ try {
     }
 
     http_response_code(500);
-    echo json_encode(['status' => 'error', 'message' => 'Mailer Error: ' . $e->getMessage()]);
+    global $smtpDebug;
+        echo json_encode([
+            'status' => 'error',
+            'message' => 'Mailer Error: ' . $e->getMessage(),
+            'exception' => [
+                'file' => $e->getFile(),
+                'line' => $e->getLine(),
+                'trace' => $e->getTraceAsString(),
+                'code' => $e->getCode(),
+            ],
+            'smtp_debug' => isset($smtpDebug) ? $smtpDebug : ''
+        ]);
 }
