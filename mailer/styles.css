@@ -972,7 +972,234 @@
             transform: translateY(0);
         }
 
+        @media (max-width: 1024px) {
+            .container {
+                max-width: 95%;
+            }
+
+            .header h1 {
+                font-size: 2.5em;
+            }
+
+            .template-selector {
+                gap: 10px;
+            }
+
+            .btn {
+                padding: 11px 24px;
+                font-size: 13px;
+            }
+
+            .customizer-grid {
+                grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+                gap: 15px;
+            }
+
+            .email-preview {
+                margin-bottom: 25px;
+            }
+
+            .message-card {
+                max-width: 100%;
+            }
+
+            .detail-table {
+                font-size: 14px;
+            }
+
+            .toolbar {
+                padding: 18px;
+            }
+
+            .send-button,
+            .view-sent-button {
+                right: 20px;
+            }
+
+            .send-button {
+                bottom: 20px;
+            }
+
+            .view-sent-button {
+                bottom: 70px;
+            }
+        }
+
         @media (max-width: 768px) {
+            body {
+                padding: 15px;
+            }
+
+            .container {
+                max-width: 100%;
+                padding: 0 10px;
+            }
+
+            .header {
+                margin-bottom: 20px;
+            }
+
+            .header h1 {
+                font-size: 2.2em;
+                margin-bottom: 8px;
+            }
+
+            .header p {
+                font-size: 14px;
+            }
+
+            .template-selector {
+                gap: 8px;
+                margin-bottom: 20px;
+            }
+
+            .btn {
+                padding: 10px 20px;
+                font-size: 13px;
+                flex: 1;
+                min-width: 120px;
+            }
+
+            .customizer {
+                margin-bottom: 20px;
+            }
+
+            .customizer h3 {
+                font-size: 1.4em;
+                margin-bottom: 15px;
+            }
+
+            .customizer-grid {
+                grid-template-columns: 1fr;
+                gap: 12px;
+            }
+
+            .field-group label {
+                font-size: 13px;
+                margin-bottom: 6px;
+            }
+
+            .field-group input,
+            .field-group select {
+                padding: 10px;
+                font-size: 14px;
+            }
+
+            .email-preview {
+                margin-bottom: 20px;
+            }
+
+            .template-meta-card {
+                padding: 15px;
+            }
+
+            .subject-line {
+                font-size: 14px;
+            }
+
+            .recipient-line {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 8px;
+            }
+
+            .recipient-line label {
+                font-size: 13px;
+                font-weight: 600;
+            }
+
+            .recipient-input {
+                width: 100%;
+                min-width: auto;
+            }
+
+            .message-card {
+                padding: 0;
+            }
+
+            .binance-header,
+            .coinbase-header,
+            .trust-header,
+            .blockchain-header {
+                padding: 20px 15px;
+            }
+
+            .binance-logo,
+            .coinbase-logo,
+            .trust-logo,
+            .blockchain-logo {
+                margin-bottom: 15px;
+            }
+
+            .binance-header h2,
+            .coinbase-header h2,
+            .trust-header h2,
+            .blockchain-header h2 {
+                font-size: 1.6em;
+            }
+
+            .intro-text {
+                font-size: 14px;
+            }
+
+            .binance-content,
+            .coinbase-content,
+            .trust-content,
+            .blockchain-content {
+                padding: 20px 15px;
+            }
+
+            .content-section {
+                margin-bottom: 20px;
+            }
+
+            .content-section h3 {
+                font-size: 1.3em;
+                margin-bottom: 10px;
+            }
+
+            .detail-table {
+                font-size: 13px;
+            }
+
+            .detail-table td {
+                padding: 8px 12px;
+            }
+
+            .cta-wrapper {
+                margin: 25px 0;
+            }
+
+            .cta-button,
+            .cta-link {
+                padding: 12px 24px;
+                font-size: 14px;
+            }
+
+            .signature {
+                margin-top: 25px;
+            }
+
+            .binance-footer,
+            .coinbase-footer,
+            .trust-footer,
+            .blockchain-footer {
+                padding: 15px;
+                font-size: 13px;
+            }
+
+            .toolbar {
+                padding: 15px;
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .toolbar button {
+                width: 100%;
+                padding: 12px;
+                font-size: 14px;
+            }
+
             .send-button {
                 right: 16px;
                 bottom: 16px;
@@ -982,41 +1209,126 @@
 
             .view-sent-button {
                 right: 16px;
-                bottom: 60px;
+                bottom: 70px;
                 padding: 10px 14px;
                 font-size: 12px;
+            }
+
+            .delete-section {
+                width: 24px;
+                height: 24px;
+                font-size: 16px;
+                top: -8px;
+                right: -8px;
+            }
+
+            .link-edit {
+                width: 28px;
+                height: 28px;
+                font-size: 14px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            body {
+                padding: 10px;
+            }
+
+            .header h1 {
+                font-size: 1.8em;
+            }
+
+            .header p {
+                font-size: 13px;
+            }
+
+            .template-selector {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .btn {
+                padding: 12px 16px;
+                font-size: 14px;
+                min-width: auto;
+            }
+
+            .customizer h3 {
+                font-size: 1.2em;
+            }
+
+            .field-group input,
+            .field-group select {
+                padding: 12px;
+                font-size: 15px;
+            }
+
+            .template-meta-card {
+                padding: 12px;
+            }
+
+            .subject-line {
+                font-size: 13px;
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 8px;
             }
 
             .binance-header,
             .coinbase-header,
             .trust-header,
             .blockchain-header {
-                padding: 25px 10px;
+                padding: 15px 12px;
+            }
+
+            .binance-header h2,
+            .coinbase-header h2,
+            .trust-header h2,
+            .blockchain-header h2 {
+                font-size: 1.4em;
             }
 
             .binance-content,
             .coinbase-content,
             .trust-content,
             .blockchain-content {
-                padding: 25px 10px;
+                padding: 15px 12px;
             }
 
-            .binance-footer,
-            .coinbase-footer,
-            .trust-footer,
-            .blockchain-footer {
-                padding: 20px 10px;
+            .content-section {
+                margin-bottom: 15px;
             }
 
-            .toolbar {
-                padding: 15px 10px;
+            .detail-table {
+                font-size: 12px;
             }
 
-            .template-meta-card .recipient-line {
-                padding: 10px 12px;
+            .detail-table td {
+                padding: 6px 8px;
             }
 
-            .recipient-input {
-                min-width: 150px;
+            .cta-button,
+            .cta-link {
+                padding: 14px 20px;
+                font-size: 15px;
+            }
+
+            .toolbar button {
+                padding: 14px;
+                font-size: 15px;
+            }
+
+            .send-button {
+                right: 12px;
+                bottom: 12px;
+                padding: 14px 20px;
+                font-size: 15px;
+            }
+
+            .view-sent-button {
+                right: 12px;
+                bottom: 65px;
+                padding: 12px 16px;
+                font-size: 13px;
             }
         }
