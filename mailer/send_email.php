@@ -8,7 +8,7 @@ use PHPMailer\PHPMailer\Exception;
 use Dotenv\Dotenv;
 use Dotenv\Exception\InvalidPathException;
 use Dotenv\Exception\InvalidFileException;
-
+ 
 require_once __DIR__ . '/vendor/autoload.php';
 
 // Load environment variables
@@ -59,45 +59,56 @@ if (empty($body)) {
 
 // Use your Gmail account and app password for current sending.
 // After you configure cPanel, set $useCpanelSmtp = true and fill in the cPanel settings.
-$gmailUsername = $_ENV['GMAIL_USERNAME'];
-$gmailPassword = $_ENV['GMAIL_PASSWORD'];
+$gmailUsername = trim($_ENV['GMAIL_USERNAME'] ?? '');
+$gmailPassword = trim($_ENV['GMAIL_PASSWORD'] ?? '');
 
-$cpanelHost = $_ENV['CPANEL_HOST'];
-$cpanelUsername = $_ENV['CPANEL_USERNAME'];
-$cpanelPassword = $_ENV['CPANEL_PASSWORD'];
+$cpanelHost = trim($_ENV['CPANEL_HOST'] ?? '');
+$cpanelUsername = trim($_ENV['CPANEL_USERNAME'] ?? '');
+$cpanelPassword = trim($_ENV['CPANEL_PASSWORD'] ?? '');
 $cpanelPort = (int)($_ENV['CPANEL_PORT'] ?? 587);
-$cpanelEncryption = parseEncryptionValue($_ENV['CPANEL_ENCRYPTION'] ?? '');
+$cpanelEncryption = parseEncryptionValue(trim($_ENV['CPANEL_ENCRYPTION'] ?? ''));
 
-function parseEncryptionValue($value) {
-    return match ($value) {
-        'PHPMailer::ENCRYPTION_STARTTLS' => \PHPMailer\PHPMailer\PHPMailer::ENCRYPTION_STARTTLS,
-        'PHPMailer::ENCRYPTION_SMTPS' => \PHPMailer\PHPMailer\PHPMailer::ENCRYPTION_SMTPS,
+function parseEncryptionValue(string $value): string {
+    return match (strtolower($value)) {
+        'phpmailer::encryption_starttls', 'starttls', 'tls' => \PHPMailer\PHPMailer\PHPMailer::ENCRYPTION_STARTTLS,
+        'phpmailer::encryption_smtps', 'smtps', 'ssl' => \PHPMailer\PHPMailer\PHPMailer::ENCRYPTION_SMTPS,
+        '' => '',
         default => $value,
     };
 }
 
+$hasCpanelSettings = $cpanelHost !== '' && $cpanelUsername !== '' && $cpanelPassword !== '';
+if (!$useCpanelSmtp && $hasCpanelSettings && ($gmailUsername === '' || $gmailPassword === '')) {
+    $useCpanelSmtp = true;
+}
+
 try {
     $mail = new PHPMailer(true);
+    $mail->isSMTP();
+    $mail->SMTPAuth = true;
+    $mail->SMTPAutoTLS = true;
+    $mail->SMTPOptions = [
+        'ssl' => [
+            'verify_peer' => false,
+            'verify_peer_name' => false,
+            'allow_self_signed' => true,
+        ],
+    ];
 
-    if ($useCpanelSmtp) {
-        $mail->isSMTP();
+    if ($useCpanelSmtp && $hasCpanelSettings) {
         $mail->Host = $cpanelHost;
-        $mail->SMTPAuth = true;
         $mail->Username = $cpanelUsername;
         $mail->Password = $cpanelPassword;
-        $mail->SMTPSecure = $cpanelEncryption;
+        $mail->SMTPSecure = $cpanelEncryption ?: PHPMailer::ENCRYPTION_STARTTLS;
         $mail->Port = $cpanelPort;
         $mail->setFrom($cpanelUsername, $senderName);
         if ($senderEmail) {
             $mail->addReplyTo($senderEmail, $senderName);
         }
     } else {
-        $mail->isSMTP();
         $mail->Host = 'smtp.gmail.com';
-        $mail->SMTPAuth = true;
         $mail->Username = $gmailUsername;
         $mail->Password = $gmailPassword;
-        $mail->SMTPAutoTLS = true;
         $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
         $mail->Port = 587;
         $mail->setFrom($gmailUsername, $senderName);

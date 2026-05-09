@@ -163,7 +163,16 @@ async function sendEmail() {
             body: formData
         });
 
-        const data = await response.json();
+        const text = await response.text();
+        let data;
+        try {
+            data = JSON.parse(text);
+        } catch (parseError) {
+            console.error('JSON parse error:', parseError, 'response text:', text);
+            showStatus('Unable to send email: server returned invalid response.', 'error');
+            return;
+        }
+
         if (response.ok && data.status === 'success') {
             showStatus(data.message || 'Email sent successfully.', 'success');
         } else {

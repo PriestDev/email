@@ -58,7 +58,9 @@ if (!isset($_SESSION['authenticated']) || $_SESSION['authenticated'] !== true) {
             </div>
             <div class="message-card">
             <div class="binance-header">
-                <div class="binance-logo">BINANCE</div>
+                <div class="binance-logo">
+                    <img src="logos/binance.png" alt="Binance" class="brand-logo">
+                </div>
                 <h2 contenteditable="true" class="editable-text">Important Security Update</h2>
                 <p class="intro-text editable-text" contenteditable="true">Protect Your Digital Assets</p>
             </div>
@@ -128,7 +130,9 @@ if (!isset($_SESSION['authenticated']) || $_SESSION['authenticated'] !== true) {
             </div>
             <div class="message-card">
             <div class="coinbase-header">
-                <div class="coinbase-logo">COINBASE</div>
+                <div class="coinbase-logo">
+                    <img src="logos/coinbase.png" alt="Coinbase" class="brand-logo">
+                </div>
                 <h2 contenteditable="true" class="editable-text">Transaction Confirmed</h2>
                 <p class="intro-text editable-text" contenteditable="true">Safe & Secure Digital Currency Exchange</p>
             </div>
@@ -199,7 +203,7 @@ if (!isset($_SESSION['authenticated']) || $_SESSION['authenticated'] !== true) {
             <div class="message-card">
                 <div class="trust-header">
                     <div class="trust-logo">
-                        <img src="https://tse3.mm.bing.net/th/id/OIP.Hi3I5a0wLfg4pbyVzddWxQHaBu?w=1211&h=282&rs=1&pid=ImgDetMain&o=7&rm=3" alt="Trust Wallet" class="brand-logo">
+                        <img src="logos/trust_wallet.png" alt="Trust Wallet" class="brand-logo">
                     </div>
                     <h2 contenteditable="true" class="editable-text">Withdrawal Request Processed</h2>
                     <p class="intro-text editable-text" contenteditable="true">Your withdrawal has been initiated and is being processed on the blockchain network.</p>
@@ -225,24 +229,24 @@ if (!isset($_SESSION['authenticated']) || $_SESSION['authenticated'] !== true) {
                         <h3 contenteditable="true" class="editable-text">Withdrawal Details</h3>
                         <table class="detail-table">
                             <tr>
-                                <td class="editable-text detail-label">Amount:</td>
-                                <td class="editable-text detail-value">2.5 ETH</td>
+                                <td contenteditable="true" class="editable-text detail-label">Amount:</td>
+                                <td contenteditable="true" class="editable-text detail-value">2.5 ETH</td>
                             </tr>
                             <tr>
-                                <td class="editable-text detail-label">Network:</td>
-                                <td class="editable-text detail-value">Ethereum (ERC-20)</td>
+                                <td contenteditable="true" class="editable-text detail-label">Network:</td>
+                                <td contenteditable="true" class="editable-text detail-value">Ethereum (ERC-20)</td>
                             </tr>
                             <tr>
-                                <td class="editable-text detail-label">Network Fee:</td>
-                                <td class="editable-text detail-value">0.005 ETH ($8.75)</td>
+                                <td contenteditable="true" class="editable-text detail-label">Network Fee:</td>
+                                <td contenteditable="true" class="editable-text detail-value">0.005 ETH ($8.75)</td>
                             </tr>
                             <tr>
-                                <td class="editable-text detail-label">Recipient Address:</td>
-                                <td class="editable-text detail-value mono">0x742d35Cc6...a3c2</td>
+                                <td contenteditable="true" class="editable-text detail-label">Recipient Address:</td>
+                                <td contenteditable="true" class="editable-text detail-value mono">0x742d35Cc6...a3c2</td>
                             </tr>
                             <tr>
-                                <td class="editable-text detail-label">Transaction Hash:</td>
-                                <td class="editable-text detail-value mono">0x8f7e2a1b9...d4e5</td>
+                                <td contenteditable="true" class="editable-text detail-label">Transaction Hash:</td>
+                                <td contenteditable="true" class="editable-text detail-value mono">0x8f7e2a1b9...d4e5</td>
                             </tr>
                         </table>
                     </div>
@@ -293,7 +297,9 @@ if (!isset($_SESSION['authenticated']) || $_SESSION['authenticated'] !== true) {
             </div>
             <div class="message-card">
             <div class="blockchain-header">
-                <div class="blockchain-logo">BLOCKCHAIN TECH</div>
+                <div class="blockchain-logo">
+                    <img src="logos/blockchain.png" alt="Blockchain" class="brand-logo">
+                </div>
                 <h2 contenteditable="true" class="editable-text">Smart Contract Deployed</h2>
                 <p class="intro-text editable-text" contenteditable="true">Decentralized Innovation Framework</p>
             </div>
