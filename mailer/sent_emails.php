@@ -401,10 +401,6 @@ try {
                 padding: 16px 12px;
                 font-size: 13px;
             }
-
-            .subject-cell {
-                max-width: 200px;
-            }
         }
 
         @media (max-width: 768px) {
@@ -451,8 +447,7 @@ try {
                 white-space: nowrap;
             }
 
-            .recipient-cell,
-            .subject-cell {
+            .recipient-cell {
                 max-width: 150px;
                 overflow: hidden;
                 text-overflow: ellipsis;
@@ -514,8 +509,7 @@ try {
                 font-size: 11px;
             }
 
-            .recipient-cell,
-            .subject-cell {
+            .recipient-cell {
                 max-width: 120px;
             }
 
@@ -593,7 +587,7 @@ try {
                                     </span>
                                 </td>
                                 <td class="actions-cell">
-                                    <button class="view-body" onclick="showBody('<?php echo addslashes($email['body']); ?>')">View</button>
+                                    <button class="view-body" data-body="<?php echo htmlspecialchars(addslashes($email['body'])); ?>" onclick="showBody(this)">View</button>
                                 </td>
                             </tr>
                         <?php endforeach; ?>
@@ -612,7 +606,8 @@ try {
     </div>
 
     <script>
-        function showBody(body) {
+        function showBody(button) {
+            const body = button.getAttribute('data-body');
             document.getElementById('email-body').innerHTML = body;
             document.getElementById('modal').style.display = 'flex';
         }
