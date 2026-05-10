@@ -1,7 +1,7 @@
         .logo-wrapper {
             position: relative;
             display: inline-block;
-        }
+        /* removed duplicate closing brace causing syntax error */
         .change-logo-btn {
             position: absolute;
             top: 0;
@@ -1482,3 +1482,4 @@
                 font-size: 13px;
             }
         }
+/* removed stray closing brace causing syntax error */

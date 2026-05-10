@@ -79,7 +79,7 @@ $cpanelPassword = trim($_ENV['CPANEL_PASSWORD'] ?? '');
 $cpanelPort = (int)($_ENV['CPANEL_PORT'] ?? 587);
 $cpanelEncryption = parseEncryptionValue(trim($_ENV['CPANEL_ENCRYPTION'] ?? ''));
 
-function parseEncryptionValue($value) {
+function parseEncryptionValue(string $value) {
     $value = strtolower($value);
     switch ($value) {
         case 'phpmailer::encryption_starttls':
